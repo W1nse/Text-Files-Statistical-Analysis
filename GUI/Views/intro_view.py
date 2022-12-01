@@ -15,9 +15,5 @@ class IntroView(GridLayout):
         self.spacing  = 20
         #view buttons
         self.load_text_btn = Button(text="Load Text File")
-        self.write_text_btn = Button(text="Write Your Text")
         self.load_text_btn.height = 20
-        self.write_text_btn.height = 20
-
         self.add_widget(self.load_text_btn)
-        self.add_widget(self.write_text_btn)
