@@ -6,7 +6,10 @@ from kivy.uix.label import Label
 from kivy.clock import Clock
 
 class LoadView(GridLayout):
-    def __init__(self, **kwargs):
-        super(LoadView).__init__(**kwargs)
+    def __init__(self, app, **kwargs):
+        super(LoadView, self).__init__(**kwargs)
+        self.app = app 
+        self.cols = 1
+
         self.file_chooser = FileChooserListView()
         self.add_widget(self.file_chooser)
