@@ -11,5 +11,28 @@ class LoadView(GridLayout):
         self.app = app 
         self.cols = 1
 
+        #file chooser
         self.file_chooser = FileChooserListView()
         self.add_widget(self.file_chooser)
+
+        subgrid0 = GridLayout(cols=2,size_hint_y=None,height=50)
+
+        #load button 
+        self.load_btn = Button(text="Load")
+        self.load_btn.on_press = self.load_action
+        subgrid0.add_widget(self.load_btn)
+        #cancel button
+        self.cancel_btn = Button(text="Cancel")
+        self.cancel_btn.on_press = self.cancel_action
+        subgrid0.add_widget(self.cancel_btn)
+
+        self.add_widget(subgrid0)
+    
+    def cancel_action(self):
+        Clock.schedule_once(self.app.switch_to_intro_view,0.5)
+    
+    def load_action(self):
+        if len(self.file_chooser.selection)!=0:
+            if self.file_chooser.selection[0][-4:] == ".txt":
+                self.app.text_file_dir = self.file_chooser.selection[0]
+                Clock.schedule_once(self.app.switch_to_main_view,0.5)

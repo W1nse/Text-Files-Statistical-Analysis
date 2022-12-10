@@ -6,7 +6,7 @@ from kivy.uix.button import Button
 
 
 class MainView(GridLayout):
-    def __init__(self, **kwargs):
+    def __init__(self, app, **kwargs):
         super(MainView, self).__init__(**kwargs)
         #geometry 
         self.cols = 1

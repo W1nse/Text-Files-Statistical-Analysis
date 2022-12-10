@@ -12,8 +12,10 @@ class MyApp(App):
     def __init__(self, **kwargs):
         super(MyApp, self).__init__(**kwargs)
         self.title = "Stats.txt"
+        self.text_file_dir = ""
     
     def build(self):
+
         self.screen_manager =ScreenManager()
 
         #adding intro page to the UI
@@ -27,7 +29,7 @@ class MyApp(App):
         screen1.add_widget(self.load_view)
         self.screen_manager.add_widget(screen1)
         #main view
-        self.main_view = MainView()
+        self.main_view = MainView(self)
         screen2 = Screen(name="main")
         screen2.add_widget(self.main_view)
         self.screen_manager.add_widget(screen2)
@@ -36,5 +38,12 @@ class MyApp(App):
 
         return self.screen_manager
     
+    #screen switching functions
+    def switch_to_intro_view(self, dt=0):
+        self.screen_manager.current = "intro"
+    
     def switch_to_load_view(self, dt=0):
         self.screen_manager.current = "load"
+    
+    def switch_to_main_view(self, dt=0):
+        self.screen_manager.current = "main"
