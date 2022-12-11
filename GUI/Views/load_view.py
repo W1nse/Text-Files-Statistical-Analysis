@@ -4,6 +4,8 @@ from kivy.uix.button import Button
 from kivy.uix.filechooser import FileChooserListView 
 from kivy.uix.label import Label 
 from kivy.clock import Clock
+from kivy.core.window import Window 
+
 
 class LoadView(GridLayout):
     def __init__(self, app, **kwargs):
@@ -20,16 +22,19 @@ class LoadView(GridLayout):
         #load button 
         self.load_btn = Button(text="Load")
         self.load_btn.on_press = self.load_action
+        self.load_btn.background_color = (0,0,1,0.5)
+
         subgrid0.add_widget(self.load_btn)
         #cancel button
         self.cancel_btn = Button(text="Cancel")
         self.cancel_btn.on_press = self.cancel_action
+        self.cancel_btn.background_color = (1,0,0,0.5)
         subgrid0.add_widget(self.cancel_btn)
 
         self.add_widget(subgrid0)
     
     def cancel_action(self):
-        Clock.schedule_once(self.app.switch_to_intro_view,0.5)
+        Clock.schedule_once(self.app.switch_to_main_view,0.5)
     
     def load_action(self):
         if len(self.file_chooser.selection)!=0:
