@@ -40,4 +40,10 @@ class LoadView(GridLayout):
         if len(self.file_chooser.selection)!=0:
             if self.file_chooser.selection[0][-4:] == ".txt":
                 self.app.text_file_dir = self.file_chooser.selection[0]
+                text_file = open(self.app.text_file_dir, mode="r")
+                all_text = text_file.read()
+                if all_text!="":
+                    self.app.disable_main_view_ops = False
+                text_file.close()
+                self.app.analyzer.set_text(all_text)
                 Clock.schedule_once(self.app.switch_to_main_view,0.5)

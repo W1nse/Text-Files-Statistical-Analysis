@@ -2,10 +2,14 @@ from multipledispatch import dispatch
 from src.lib import generate_char_rv_dict, generate_rv_char_dict, filter_text
 
 class Analyzer():
-    def __init__(self, text):
+    def __init__(self, text=""):
         self.text = filter_text(text)
         self.char_value_map = generate_char_rv_dict()
         self.value_char_map = generate_rv_char_dict()
+        self.frequencies = {i:self.character_freq(self.value_char_map[i]) for i in range(62)} if text!="" else {}
+
+    def set_text(self, new_text):
+        self.text = filter_text(new_text)
         self.frequencies = {i:self.character_freq(self.value_char_map[i]) for i in range(62)}
 
     
@@ -36,13 +40,13 @@ class Analyzer():
     def moment(self, moment_number:int)->float:
         value = 0
         for x_i in range(62):
-            value = (x_i**moment_number)*self.pmf(x_i)
+            value += (x_i**moment_number)*self.pmf(x_i)
         return value        
 
     def centered_moment(self, moment_number:int)->float:
         value = 0
         for x_i in range(62):
-            value = ((x_i-self.mean())**moment_number)*self.pmf(x_i)
+            value += ((x_i-self.mean())**moment_number)*self.pmf(x_i)
         return value   
 
     @dispatch(int)
@@ -53,8 +57,8 @@ class Analyzer():
     def pmf(self ,c:str)->float:
         return self.character_freq(c)/len(self.text)
     
-    @dispatch(int)
-    def cdf(self, x:int)->float:
+    @dispatch(float)
+    def cdf(self, x:float)->float:
         cdf_value = 0
         for x_i in range(int(x)):
             cdf_value += self.pmf(x_i)
