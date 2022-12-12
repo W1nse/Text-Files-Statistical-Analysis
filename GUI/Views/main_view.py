@@ -10,6 +10,8 @@ from kivy.graphics import Color, Rectangle
 from kivy.uix.textinput import TextInput
 import matplotlib.pyplot  as plt
 import numpy as np 
+import seaborn as sns
+sns.set_style("darkgrid")
 
 
 class CustomLabel(Label):
@@ -103,21 +105,24 @@ class MainView(GridLayout):
 
         self.add_widget(self.stats_graphs_section)
 
+        self.status_bar = Label()
+        self.add_widget(self.status_bar)
         
     def graph_pmf(self):
         X = [i for i in range(62)]
         Y = [self.app.analyzer.pmf(x) for x in X]
-        plt.xlabel("x")
-        plt.ylabel("f(x)")
+        plt.title("Probability Mass Function")
+        plt.xlabel("x", fontsize=17)
+        plt.ylabel("f(x)", fontsize=17)
         plt.stem(X, Y)
         plt.show()
     
     def graph_cdf(self):
-        print(self.app.analyzer.pmf(0))
         X = np.arange(0,62,0.1).tolist()
         Y = [self.app.analyzer.cdf(x) for x in X]
-        plt.xlabel("x")
-        plt.ylabel("F(x)")
+        plt.title("Cumulative Distribution Function")
+        plt.xlabel("x", fontsize=17)
+        plt.ylabel("F(x)", fontsize=17)
         plt.plot(X, Y)
         plt.show()
     
@@ -125,17 +130,39 @@ class MainView(GridLayout):
         X = [i for i in range(62)]
         Y = [self.app.analyzer.pmf(x) for x in X]
         X = [self.app.analyzer.get_rv_char(x) for x in X]
-        plt.xlabel("Character")
-        plt.ylabel("Probability")
+        plt.title("Characters Probabilities")
+        plt.xlabel("Character", fontsize=17)
+        plt.ylabel("Probability", fontsize=17)
         plt.stem(X, Y)
         plt.show()
-    
-    def show_top_repeated_n(self):
-        pass
-
+            
 
     def show_top_n_func(self):
-        print(self.top_n_textinput.text, self.top_n_btn.disabled)
+        try:
+            n = int(self.top_n_textinput.text.strip())
+            top = self.app.analyzer.get_repleated_characters(n)
+            char_list = []
+            freq_list = []
+
+            for item in top:
+                char_list.append(self.app.analyzer.get_rv_char(item[0]))
+                freq_list.append(item[1])
+            
+            plt.bar(char_list,freq_list)
+            plt.title(f"Most Repeated {self.top_n_textinput.text.strip()} Characters")
+            plt.xlabel("Characters")
+            plt.ylabel("Count")
+            plt.show()
+
+        except:
+            self.add_status_bar_msg("Invalid Input!")
+
+    def empty_status_bar(self,dt):
+        self.status_bar.text = ""
+
+    def add_status_bar_msg(self, msg:str):
+        self.status_bar.text = msg 
+        Clock.schedule_once(self.empty_status_bar,2) 
 
 
     def load_btn_func(self):

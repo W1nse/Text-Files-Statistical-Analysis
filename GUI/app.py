@@ -14,7 +14,7 @@ class MyApp(App):
         super(MyApp, self).__init__(**kwargs)
         self.title = "Stats.txt"
         self.text_file_dir = ""
-        Window.size = (800, 700)
+        Window.size = (800, 800)
         self.analyzer = Analyzer()
         self.disable_main_view_ops = True
     
@@ -52,6 +52,11 @@ class MyApp(App):
         print(self.analyzer.variance())
         if self.disable_main_view_ops==False:
             self.main_view.mean_label.text = str(round(self.analyzer.mean(),4))
-            self.main_view.variance_label.text = str(round(self.analyzer.variance(),4))
-            self.main_view.skewness_label.text = str(round(self.analyzer.skewness(),4))
-            self.main_view.kurtosis_label.text = str(round(self.analyzer.kurtosis(),4))
+            variance = self.analyzer.variance()
+            self.main_view.variance_label.text = str(round(variance,4))
+            if variance!=0:
+                self.main_view.skewness_label.text = str(round(self.analyzer.skewness(),4))
+                self.main_view.kurtosis_label.text = str(round(self.analyzer.kurtosis(),4))
+            else:
+                self.main_view.skewness_label.text = "Undefined"
+                self.main_view.kurtosis_label.text = "Undefined"
