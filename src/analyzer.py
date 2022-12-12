@@ -8,7 +8,7 @@ class Analyzer():
         self.value_char_map = generate_rv_char_dict()
         self.frequencies = {i:self.character_freq(self.value_char_map[i]) for i in range(62)} if text!="" else {}
 
-    def set_text(self, new_text):
+    def set_text(self, new_text:str):
         self.text = filter_text(new_text)
         self.frequencies = {i:self.character_freq(self.value_char_map[i]) for i in range(62)}
 

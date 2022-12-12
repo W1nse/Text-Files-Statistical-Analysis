@@ -1,10 +1,7 @@
-import kivy
 from kivy.uix.gridlayout import GridLayout 
 from kivy.uix.button import Button 
 from kivy.uix.filechooser import FileChooserIconView 
-from kivy.uix.label import Label 
 from kivy.clock import Clock
-from kivy.core.window import Window 
 
 
 class LoadView(GridLayout):
