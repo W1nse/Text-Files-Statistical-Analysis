@@ -3,12 +3,12 @@ GUI-based tool that allows a user to add any text file and results in some stati
 
 ## Installs:
 - To install requirements:
-'''
+```
   pip install -r requirements.txt
-'''
+```
 ## Run:
 - To run the program:
-'''
+```
 python main.py
-'''
+```
  
