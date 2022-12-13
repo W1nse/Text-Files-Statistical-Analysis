@@ -2,6 +2,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button 
 from kivy.uix.filechooser import FileChooserIconView 
 from kivy.clock import Clock
+from kivy.uix.label import Label 
 
 
 class LoadView(GridLayout):
@@ -29,6 +30,8 @@ class LoadView(GridLayout):
         subgrid0.add_widget(self.cancel_btn)
 
         self.add_widget(subgrid0)
+        self.status_bar = Label(size_hint_y=None, height=80)
+        self.add_widget(self.status_bar)
     
     def cancel_action(self):
         Clock.schedule_once(self.app.switch_to_main_view,0.5)
@@ -44,3 +47,14 @@ class LoadView(GridLayout):
                 text_file.close()
                 self.app.analyzer.set_text(all_text)
                 Clock.schedule_once(self.app.switch_to_main_view,0.5)
+            else:
+                self.add_status_bar_msg("Invalid extension (Allowed extension: .txt)")
+        else:
+            self.add_status_bar_msg("Please choose a valid .txt file")
+
+    def empty_status_bar(self,dt):
+        self.status_bar.text = ""
+
+    def add_status_bar_msg(self, msg:str):
+        self.status_bar.text = msg 
+        Clock.schedule_once(self.empty_status_bar,2) 
